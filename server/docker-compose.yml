@@ -1,0 +1,10 @@
+services:
+  postgresql:
+    image: bitnami/postgresql:latest
+    container_name: moshe
+    environment:
+      - POSTGRESQL_USERNAME=admin
+      - POSTGRESQL_PASSWORD=admin
+      - POSTGRESQL_DATABASE=moshe
+    ports:
+      - "5432:5432"
