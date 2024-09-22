@@ -122,9 +122,9 @@ export const TodoComponent = ({
         </div>
       </div>
       <div className="">
-        <div>
+        <div className="max-w-80">
           <h1 className="text-3xl font-bold">{title}</h1>
-          <p className="text-zinc-400">{description}</p>
+          <p className="text-zinc-400 break-words">{description}</p>
         </div>
       </div>
     </div>
