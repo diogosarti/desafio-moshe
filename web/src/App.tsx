@@ -6,10 +6,12 @@ import { FooterComponent } from "./components/footer";
 import diogo from "./assets/diogo.jpg";
 import {
   AlertDialog,
-  AlertDialogAction, AlertDialogContent,
+  AlertDialogAction,
+  AlertDialogContent,
   AlertDialogDescription,
-  AlertDialogTitle, AlertDialogFooter,
-  AlertDialogHeader
+  AlertDialogTitle,
+  AlertDialogFooter,
+  AlertDialogHeader,
 } from "./components/ui/alert-dialog";
 
 function App() {
@@ -19,20 +21,23 @@ function App() {
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Diogo Julio</AlertDialogTitle>
-            <AlertDialogDescription className="flex justify-between">
+            <AlertDialogDescription className="flex flex-col justify-between sm:flex-row items-center gap-4">
               <span className="mr-4">
                 Atualmente trabalho como suporte Help Desk, porém meu sonho
                 sempre foi ser desenvolvedor, e continuo correndo atrás desse
                 sonho incansávelmente. Sejá na faculdade ou em casa, estou
                 sempre estudando e buscando minha evolução.
                 <ul className="list-disc mt-2">
-                  <li>Tempo estimado do projeto: <b>8h</b></li>
                   <li>
-                    Tecnologias: <b>ReactJS</b> (Vite), <strong>NestJS</strong> (Node), <b>PostgreSQL</b>
+                    Tempo estimado do projeto: <b>8h</b>
+                  </li>
+                  <li>
+                    Tecnologias: <b>ReactJS</b> (Vite), <strong>NestJS</strong>{" "}
+                    (Node), <b>PostgreSQL</b>
                   </li>
                 </ul>
               </span>
-              <img width={200} height={200} src={diogo} alt="" />
+              <img width={200} height={200} className="" src={diogo} alt="" />
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
