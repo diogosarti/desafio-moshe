@@ -1,6 +1,7 @@
 import { CheckSquare, Edit, Trash2, X } from "lucide-react";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogTitle,
@@ -8,6 +9,12 @@ import {
 } from "./ui/dialog";
 import { useForm } from "react-hook-form";
 import { useQueryClient } from "@tanstack/react-query";
+import { Input } from "./ui/input";
+import { Textarea } from "./ui/textarea";
+import { Button } from "./ui/button";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Label } from "./ui/label";
 
 interface TodoComponentParams {
   id: string;
@@ -23,10 +30,12 @@ interface TodoComponentParams {
   }) => void;
 }
 
-type TodoDataUpdate = {
-  title: string;
-  description: string;
-};
+const updateTodo = z.object({
+  title: z.string().min(1, "Informe a atividade que deseja realizar"),
+  description: z.string(),
+});
+
+type TodoDataUpdate = z.infer<typeof updateTodo>;
 
 export const TodoComponent = ({
   id,
@@ -38,11 +47,12 @@ export const TodoComponent = ({
   onUpdate,
 }: TodoComponentParams) => {
   const queryClient = useQueryClient();
-  const { register, handleSubmit, reset } = useForm({
+  const { register, handleSubmit, reset, formState } = useForm<TodoDataUpdate>({
     defaultValues: {
       title,
       description,
     },
+    resolver: zodResolver(updateTodo),
   });
 
   const onSubmit = (data: TodoDataUpdate) => {
@@ -89,30 +99,56 @@ export const TodoComponent = ({
               <Edit className="cursor-pointer text-zinc-400" />
             </DialogTrigger>
             <DialogContent>
-              <DialogTitle>Editar Todo</DialogTitle>
-              <DialogDescription>
-                Atualize o título e a descrição da sua tarefa.
-              </DialogDescription>
-              <form onSubmit={handleSubmit(onSubmit)}>
-                <input
-                  id="title"
-                  placeholder="Título"
-                  className="border p-2 rounded mb-2 w-full"
-                  {...register("title")}
-                />
-                <textarea
-                  id="description"
-                  {...register("description")}
-                  placeholder="Descrição"
-                  className="border p-2 rounded mb-2 w-full"
-                />
-                <button
-                  type="submit"
-                  className="bg-blue-500 text-white p-2 rounded"
+              <div className="flex flex-col gap-6 h-full">
+                <div className="flex items-center justify-between">
+                  <DialogTitle>Editar Todo</DialogTitle>
+                  <DialogClose>
+                    <X className="size-5 text-zinc-600" />
+                  </DialogClose>
+                </div>
+
+                <DialogDescription>
+                  Atualize o título e a descrição da sua tarefa.
+                </DialogDescription>
+                <form
+                  className="flex-1 flex flex-col justify-between"
+                  onSubmit={handleSubmit(onSubmit)}
                 >
-                  Atualizar
-                </button>
-              </form>
+                  <div className="flex flex-col gap-6">
+                    <div className="flex flex-col gap-2">
+                      <Label htmlFor="title">Qual a atividade?</Label>
+                      <Input
+                        id="title"
+                        placeholder="Título"
+                        className=""
+                        {...register("title")}
+                      />
+                      {formState.errors.title && (
+                        <p className="text-red-400 text-sm">
+                          {formState.errors.title.message}
+                        </p>
+                      )}
+                      <Label htmlFor="description">Descrição</Label>
+                      <Textarea
+                        id="description"
+                        {...register("description")}
+                        placeholder="Descrição"
+                        className=""
+                      />
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center gap-3">
+                    <DialogClose asChild>
+                      <Button className="flex-1" variant="secondary">
+                        Fechar
+                      </Button>
+                    </DialogClose>
+                    <Button type="submit" className="flex-1">
+                      Salvar
+                    </Button>
+                  </div>
+                </form>
+              </div>
             </DialogContent>
           </Dialog>
           <Trash2
