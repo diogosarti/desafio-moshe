@@ -61,11 +61,11 @@ const TodoListComponent = () => {
       {isLoading ? (
         <div>
           <div className="bg-yellow-500 text-zinc-50 text-center py-2">
-            O servidor foi ospedado no{" "}
+            O servidor foi hospedado no{" "}
             <a className="underline text-zinc-900" href="https://render.com/" target="_blank">
               Render.com
             </a>
-            . A inicialização dele pode demorar <span className="underline">50s</span>. Por favor, aguarde.
+            . A inicialização pode demorar <span className="underline">50s</span>. Por favor, aguarde.
           </div>
           <SkeletonTodo />
           <SkeletonTodo />
